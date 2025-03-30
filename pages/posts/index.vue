@@ -4,32 +4,25 @@
       <div
         class="mt-10 grid gap-16-2 md:grid-cols-2 md:gap-x-5 gap-y-12 w-full"
       >
-        <div v-for="post in posts.data" :key="post.id">
-          <NuxtLink :to="'/posts/' + post.attributes.slug" class="block">
-            <!-- <Date :date="post.attributes.published_at" /> -->
+        <div v-for="post in posts" :key="post.id">
+          <NuxtLink :to="'/posts/' + post.slug" class="block">
+            <Date :date="post.createdAt" />
             <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">
-              {{ post.attributes.title }}
+              {{ post.title }}
             </h3>
-            <p
+            <h4 class="mt-2 text-xl leading-7 text-gray-900">
+              Autor: {{ post.author }}
+            </h4>
+            <!-- <p
               class="mt-3 text-justify leading-6 text-gray-500 dark:text-black"
             >
-              {{ post.attributes.preview }}
-            </p>
+              {{ post.preview }}
+            </p> -->
           </NuxtLink>
           <div class="mt-3">
             <NuxtLink
-              :to="'/posts/' + post.attributes.slug"
-              class="
-                text-base
-                leading-6
-                font-semibold
-                text-indigo-600
-                dark:text-black
-                hover:text-indigo-500
-                transition
-                ease-in-out
-                duration-150
-              "
+              :to="'/posts/' + post.slug"
+              class="text-base leading-6 font-semibold text-indigo-600 dark:text-black hover:text-indigo-500 transition ease-in-out duration-150"
             >
               Leia Mais
             </NuxtLink>
@@ -45,11 +38,11 @@ export default {
   scrollToTop: true,
   data() {
     return {
-      posts: {},
+      posts: [],
     }
   },
   async fetch() {
-    this.posts = await this.$axios.$get('/api/posts')
+    this.posts = await this.$axios.$get('/posts')
   },
 
   fetchOnServer: true,

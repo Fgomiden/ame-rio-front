@@ -78,6 +78,10 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/markdownit',
   ], 
+  
+  axios: {
+    baseURL: process.env.BASE_URL || 'http://localhost:3001',
+  },
 
   markdownit: {
     preset: 'default',
