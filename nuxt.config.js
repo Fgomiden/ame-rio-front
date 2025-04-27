@@ -48,10 +48,14 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '~/assets/css/tailwind.css', // Inclua o arquivo CSS do Tailwind
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/vue-simplemde.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
@@ -89,8 +93,15 @@ export default {
     breaks: true,
     injected: true,
     html: true,
+    runtime: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    postcss: {
+      plugins: {
+        '@tailwindcss/postcss': {},
+      },
+    },
+  },
 }
