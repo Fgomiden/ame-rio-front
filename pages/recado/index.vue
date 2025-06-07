@@ -1,20 +1,14 @@
 <template>
   <div class="py-2 bg-white">
-    <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-xl mx-auto">
       <h2
-        class="
-          text-center text-3xl
-          leading-8
-          font-extrabold
-          tracking-tight
-          text-gray-900
-        "
+        class="text-center text-3xl leading-8 font-extrabold tracking-tight text-gray-900"
       >
         Recado Fraterno
       </h2>
     </div>
-    <div class="text-gray-500 text-justify mx-auto px-10 px-md-40 max-w-4xl">
-      <div class="flex flex-col justify-center">
+    <div class="text-gray-500 text-justify mx-auto padding-text">
+      <div class="flex-column justify-center">
         <p class="py-2">Recado fraterno aos associados, colegas e confrades:</p>
         <p class="py-2">
           É importante que nos integremos cada vez mais nessa doutrina que nos
@@ -29,10 +23,11 @@
           nosso semelhante e a nós mesmos igualmente necessitados.
         </p>
         <p class="py-2">
-          O nosso site (www.ame-rio.org.br) e e-mail (amecgs@gmail.com) são
-          inundados de solicitações de amparo por irmãos em humanidade, passando
-          por sofrimentos atrozes, vivenciando sérias crises no campo íntimo e
-          físico, buscando palavras de apoio e de incentivo para se reerguerem.
+          O nosso site (www.ame-rio.org.br) e e-mail
+          (associacaomedicoespiritarj@gmail.com) são inundados de solicitações
+          de amparo por irmãos em humanidade, passando por sofrimentos atrozes,
+          vivenciando sérias crises no campo íntimo e físico, buscando palavras
+          de apoio e de incentivo para se reerguerem.
         </p>
         <p class="py-2">
           Nossa instituição tem a direção maior do venerando espírito dr. Adolfo
@@ -72,5 +67,4 @@
     </div>
   </div>
 </template>
-<script>
-</script>
+<script></script>

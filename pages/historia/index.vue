@@ -2,13 +2,7 @@
   <div class="py-2 bg-white">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2
-        class="
-          text-center text-3xl
-          leading-8
-          font-extrabold
-          tracking-tight
-          text-gray-900
-        "
+        class="text-center text-3xl leading-8 font-extrabold tracking-tight text-gray-900"
       >
         História
       </h2>
@@ -17,7 +11,7 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556380/historico/ame-rio_fundadores_1.jpg"
             alt="Fundadores Ame-Rio"
-            class="md:w-3/5 mb-5"
+            class="fundadores"
           />
         </div>
         <p class="md:px-40">
@@ -28,8 +22,8 @@
           participantes, constituindo associados fundadores os seguintes
           médicos:
         </p>
-        <div class="flex flex-col md:flex-row py-3 justify-center">
-          <div class="flex flex-col md:mr-3">
+        <div class="flex-column md-flex-row py-3 justify-center">
+          <div class="flex-column md:mr-3">
             <ul>
               - Dr. Americo Domingos Nunes Filho,
             </ul>
@@ -61,7 +55,7 @@
               - Dr. Alberto Samuel Mercante,
             </ul>
           </div>
-          <div class="flex flex-col">
+          <div class="flex-column">
             <ul>
               - Dr. Danilo Julio Lucca,
             </ul>
@@ -98,14 +92,14 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556379/historico/ame-rio_1a_diretoria_2.jpg"
             alt="Primeira Diretoria Ame-Rio"
-            class="md:w-3/5 my-5"
+            class="img-size"
           />
         </div>
         <p class="md:px-40 text-center">
           A primeira diretoria executiva da AME-RIO foi assim composta:
         </p>
         <div class="flex flex-row py-3 justify-center">
-          <div class="flex flex-col">
+          <div class="flex-column">
             <ul>
               - Presidente - Dr. Americo Domingos Nunes Filho;
             </ul>
@@ -127,7 +121,7 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650574464/historico/ame-rio-logo-transparente_3.png"
             alt="Logo Ame-Rio"
-            class="md:w-3/5 my-5"
+            class="img-size"
           />
         </div>
         <div class="md:px-40">
@@ -177,7 +171,7 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556379/historico/ame-rio_1a_sessaosolene5_4.jpg"
             alt="Sessão Solene Ame-Rio"
-            class="md:w-3/5 my-5"
+            class="img-size"
           />
         </div>
         <div class="md:px-40">
@@ -194,7 +188,7 @@
             Sheila.
           </p>
         </div>
-        <div class="flex flex-col items-center my-5">
+        <div class="flex-column items-center my-5">
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556379/historico/ame-rio_1a_sessaosolene1_6.jpg"
             alt="Sessão Solene Ame-Rio"
@@ -212,7 +206,7 @@
           ABC, Jornal A Nova Era, Jornal Espírita, O Imortal e Serviço Espírita
           de Informações - SEI.
         </p>
-        <div class="flex flex-col md:flex-row justify-center items-center my-5">
+        <div class="flex-column md-flex-row justify-center items-center my-5">
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556379/historico/ame-rio_1a_sessao2_8.jpg"
             alt="Dr. Jorge Andréa dos Santos 1"
@@ -234,7 +228,7 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556380/historico/ame-rio_1o_aniversario3_10.jpg"
             alt="Aniversário Ame-Rio"
-            class="md:w-3/5 my-5"
+            class="img-size"
           />
         </div>
         <p class="md:px-40">
@@ -248,7 +242,7 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556380/historico/ame-rio_1o_aniversario2_11.jpg"
             alt="Aniversário Ame-Rio"
-            class="md:w-3/5 my-5"
+            class="img-size"
           />
         </div>
         <p class="md:px-40">
@@ -260,7 +254,7 @@
           <img
             src="https://res.cloudinary.com/ame-rio/image/upload/v1650556380/historico/ame-rio_1o_aniversario1_12.jpg"
             alt="Aniversário Ame-Rio"
-            class="md:w-3/5 my-5"
+            class="img-size"
           />
         </div>
         <div class="md:px-40">
@@ -330,17 +324,24 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      history: {},
-    }
-  },
-  async fetch() {
-    this.history = await this.$axios.$get('/api/history?populate=*')
-  },
-  fetchOnServer: true,
+<style scoped>
+.fundadores {
+  width: 40rem;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  margin-bottom: 1.25rem;
 }
-</script>
 
+.img-size {
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+  margin-top: 1.25rem; 
+  margin-bottom: 1.25rem; 
+  height: auto;
+  width: 40rem;
+  max-width: 100%;
+  object-fit: cover;
+}
+</style>

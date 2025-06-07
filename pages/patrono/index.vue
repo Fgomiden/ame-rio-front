@@ -16,13 +16,13 @@
     <div class="mx-auto">
       <div class="flex justify-center">
         <div class="px-5 md:px-40">
-          <div class="flex flex-col text-center">
+          <div class="flex-column text-center">
             <h3 class="font-bold text-xl">Dr. Bezerra de Menezes</h3>
           </div>
-          <div class="flex flex-col py-4">
+          <div class="flex-column py-4">
             <img
               src="https://res.cloudinary.com/ame-rio/image/upload/v1650556506/bezerra-de-menezes.jpg"
-              class="w-full h-52 object-contain"
+              class="img-size"
               alt="Dr. Bezerra de Menezes"
             />
           </div>
@@ -38,3 +38,13 @@ export default {
   components: { PatronText },
 }
 </script>
+<style>
+.img-size {
+  margin-top: 1.25rem; 
+  margin-bottom: 1.25rem; 
+  width: auto;
+  height: 20rem;
+  max-width: 100%;
+  object-fit: cover;
+}
+</style>

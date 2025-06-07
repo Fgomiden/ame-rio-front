@@ -1,12 +1,12 @@
 <template>
   <div class="relative bg-white overflow-hidden">
-    <main class="flex flex-col flex-wrap mx-auto max-w-7xl px-4">
+    <main class="flex-column  flex-wrap container">
       <section id="banner">
         <banner />
       </section>
       <section id="principios">
-        <div class="flex flex-col">
-          <div class="flex flex-col md:flex-row md:justify-around">
+        <div class="flex-column ">
+          <div class="flex-column  md-flex-row md-justify-around">
             <principle-card
               title="Missão"
               description="Divulgar para os interessados em saúde a visão científica da medicina espiritual trazida pela doutrina espírita."
@@ -14,8 +14,7 @@
             />
             <principle-card
               title="Visão"
-              description="Ser uma entidade que promove e vincula à visão da comunidade
-                  científica o espiritismo para o entendimento da Saúde."
+              description="Ser uma entidade que promove e vincula à visão da comunidade científica o espiritismo para o entendimento da Saúde."
               image="./icons/stethoscope-icon.svg"
             />
           </div>
@@ -31,9 +30,6 @@
       <section id="atividades">
         <atividades />
       </section>
-      <section id="fale-conosco">
-        <contact-form />
-      </section>
     </main>
   </div>
 </template>
@@ -41,9 +37,28 @@
 <script>
 import Atividades from '~/components/pagina-inicial/Atividades.vue'
 import Banner from '~/components/pagina-inicial/Banner.vue'
-import ContactForm from '~/components/pagina-inicial/ContactForm.vue'
 import PrincipleCard from '~/components/pagina-inicial/PrincipleCard.vue'
 export default {
-  components: { PrincipleCard, Banner, ContactForm, Atividades },
+  components: { PrincipleCard, Banner, Atividades },
 }
 </script>
+
+<style scoped>
+main {
+  gap: 16px;
+}
+
+section {
+  padding: 5px 0;
+}
+
+#principios .flex-column > .flex-column,
+#principios .flex {
+  gap: 16px;
+}
+
+#principios .flex-column > .flex {
+  margin-top: 16px;
+}
+
+</style>

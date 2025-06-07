@@ -1,18 +1,18 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Painel Administrativo - Artigo</h1>
+  <div class="container">
+    <h1 class="title">Painel Administrativo - Artigo</h1>
     <NuxtLink
       to="/admin/posts/create"
-      class="mb-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500"
+      class="mb-4"
     >
       Criar Novo 
     </NuxtLink>
-    <div v-if="$fetchState.pending" class="text-center">Carregando...</div>
-    <div v-else-if="posts.length === 0" class="text-center">
+    <div v-if="$fetchState.pending" class="text-gray-600">Carregando...</div>
+    <div v-else-if="posts.length === 0" class="text-gray-600">
       Nenhum artigo encontrado.
     </div>
-    <div v-else class="grid gap-4">
-      <div v-for="post in posts" :key="post.id" class="border p-4 rounded">
+    <div v-else class="grid">
+      <div v-for="post in posts" :key="post.id" class="border border-gray-200">
         <h2 class="text-xl font-semibold">{{ post.title }}</h2>
         <p class="text-gray-600">Autor: {{ post.author }}</p>
         <p class="text-gray-600">Slug: {{ post.slug }}</p>
@@ -66,3 +66,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+.grid {
+  display: grid;
+  gap: 16px;
+}
+</style>

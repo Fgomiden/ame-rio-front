@@ -1,16 +1,6 @@
 <template>
   <div>
-    <div
-      class="
-        flex flex-col
-        sm:flex-row
-        shadow
-        h-28
-        bg-white
-        rounded-lg
-        m-2
-      "
-    >
+    <div class="doctor-card">
       <div class="p-2">
         <h3 class="text-base font-medium text-gray-800">
           {{ doctor.name }}
@@ -34,3 +24,18 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.doctor-card {
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  height: 7rem; 
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+</style>

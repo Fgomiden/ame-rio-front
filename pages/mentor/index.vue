@@ -16,10 +16,10 @@
     <div class="mx-auto">
       <div class="flex justify-center">
         <div class="px-5 md:px-40">
-          <div class="flex flex-col text-center">
+          <div class="flex-column text-center">
             <h3 class="font-bold text-xl">Dr. Dias da Cruz</h3>
           </div>
-          <div class="flex flex-col py-4">
+          <div class="flex-column py-4">
             <img
               src="https://res.cloudinary.com/ame-rio/image/upload/v1653755796/Dias-da-Cruz-FIlho.jpg"
               class="w-full h-52 object-contain"

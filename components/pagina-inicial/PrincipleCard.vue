@@ -1,23 +1,19 @@
 <template>
-  <div class="container mx-auto px-4">
+  <div class="container">
     <div class="flex flex-wrap">
       <div class="pt-6 w-full px-4 text-center">
         <div
           class="
             relative
-            flex flex-col
-            min-w-0
-            break-words
-            bg-white
-            w-full
+            flex-column 
             mb-8
-            shadow-lg
-            rounded-lg
+            w-full
+            card-shadow
           "
         >
           <div class="px-4 py-4 flex-auto">
-            <div class="inline-flex items-center justify-center w-16 h-16">
-              <img class="w-auto" :src="image" alt="Icon" />
+            <div class="card-image">
+              <img :src="image" alt="Icon" />
             </div>
             <h6 class="text-xl font-semibold">{{ title }}</h6>
             <p class="mt-2 mb-4 text-gray-600 text-lg">
@@ -58,5 +54,48 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.mb-8{
+  margin-bottom: 2rem;
+}
+
+.card {
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 16px;
+  background-color: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.card-image {
+  display: inline-flex;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 8px;
+  justify-content: center;
+}
+
+.card-image>img {
+  width: auto;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary); /* Usando primary para títulos */
+  margin-bottom: 8px;
+}
+
+.card-description {
+  font-size: 1rem;
+  color: var(--gray-600);
+}
+
+.card-values {
+  list-style: disc;
+  padding-left: 20px;
+}
 </style>

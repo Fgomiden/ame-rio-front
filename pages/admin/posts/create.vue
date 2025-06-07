@@ -1,55 +1,42 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Criar Novo Artigo</h1>
+  <div class="container">
+    <h1 class="title">Criar Novo Post</h1>
     <form @submit.prevent="createPost">
-      <div class="mb-4">
-        <label for="title" class="block text-sm font-medium text-gray-700"
-          >Título</label
-        >
+      <div class="form-group">
+        <label for="title" class="form-label">Título</label>
         <input
           v-model="form.title"
           id="title"
           type="text"
-          class="mt-1 block w-full border rounded p-2"
+          class="form-input"
           required
         />
       </div>
-      <div class="mb-4">
-        <label for="content" class="block text-sm font-medium text-gray-700"
-          >Conteúdo (Markdown)</label
-        >
+      <div class="form-group">
+        <label for="content" class="form-label">Conteúdo (Markdown)</label>
         <SimpleMde v-model="form.content" :configs="editorConfig" />
       </div>
-      <div class="mb-4">
-        <label for="docx" class="block text-sm font-medium text-gray-700"
-          >Upload de .docx (opcional)</label
-        >
-        NumerologySystem:
+      <div class="form-group">
+        <label for="docx" class="form-label">Upload de .docx (opcional)</label>
         <input
           type="file"
           id="docx"
           accept=".docx"
           @change="handleFileUpload"
-          class="mt-1 block w-full"
+          class="form-input"
         />
       </div>
-      <div class="mb-4">
-        <label for="author" class="block text-sm font-medium text-gray-700"
-          >Autor</label
-        >
+      <div class="form-group">
+        <label for="author" class="form-label">Autor</label>
         <input
           v-model="form.author"
           id="author"
           type="text"
-          class="mt-1 block w-full border rounded p-2"
+          class="form-input"
           required
         />
       </div>
-      <button
-        type="submit"
-        class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500"
-        :disabled="submitting"
-      >
+      <button type="submit" class="button-primary" :disabled="submitting">
         {{ submitting ? 'Salvando...' : 'Criar Post' }}
       </button>
     </form>
@@ -110,7 +97,6 @@ export default {
         alert('Por favor, selecione um arquivo .docx')
         return
       }
-
       try {
         const arrayBuffer = await file.arrayBuffer()
         const result = await mammoth.convertToMarkdown({ arrayBuffer })
@@ -128,9 +114,9 @@ export default {
 </script>
 
 <style scoped>
-/* Ajustes para o editor Markdown */
-:deep(.EasyMDEContainer) {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+/* Estilos específicos para a página de criação */
+form {
+  max-width: 600px;
+  margin: 0 auto;
 }
 </style>

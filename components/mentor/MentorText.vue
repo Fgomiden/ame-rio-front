@@ -1,5 +1,5 @@
 <template>
-  <div class="text-gray-500 text-justify mx-auto px-10 px-md-40 max-w-4xl">
+  <div class="text-gray-500 text-justify mx-auto padding-text">
     <p class="pb-4">
       Francisco de Menezes Dias da Cruz, natural da cidade do Rio de Janeiro,
       filho de antecedente de igual nome (chefe do Partido Liberal no Rio e

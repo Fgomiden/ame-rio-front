@@ -1,5 +1,5 @@
 <template>
-  <div class="text-gray-500 text-justify mx-auto px-10 px-md-40 max-w-4xl">
+  <div class="text-gray-500 text-justify mx-auto padding-text">
     <p class="pb-4">
       Nascido na antiga Freguesia do Riacho do Sangue, hoje Solonópole, no
       Ceará, aos 29 dias do mês de agosto de 1831, desencarnando, em 11 de abril

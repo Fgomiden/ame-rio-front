@@ -2,7 +2,7 @@
   <NuxtLink
     :to="link"
     no-prefetch
-    class="text-base leading-6 font-medium hover:text-primary focus:outline-none focus:text-gray-900 transition ease-in-out duration-150"
+    class="headerLink"
   >
     {{ text }}
   </NuxtLink>
@@ -13,7 +13,26 @@ export default {
 };
 </script>
 <style scoped>
-.nuxt-link-exact-active {
-  color: #5850ec;
+.headerLink,
+.headerLink:link,
+.headerLink:visited {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  color: #111827;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: ease-in-out;
+  transition-duration: 150ms;
+  padding-inline: 1rem; 
 }
+
+.headerLink:hover {
+  color: #3b82f6;
+}
+
+ .headerLink:focus {
+  outline: none;
+  color: #3b82f6;
+}
+
 </style>
