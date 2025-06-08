@@ -1,10 +1,10 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Editar Post</h1>
+  <div class="container">
+    <h1 class="title text-center">Editar Post</h1>
     <div v-if="$fetchState.pending" class="text-center">Carregando...</div>
     <div v-else-if="!post" class="text-center">Post não encontrado.</div>
     <form v-else @submit.prevent="updatePost">
-      <div class="mb-4">
+      <div class="form-group">
         <label for="title" class="block text-sm font-medium text-gray-700"
           >Título</label
         >
@@ -16,14 +16,14 @@
           required
         />
       </div>
-      <div class="mb-4">
-        <label for="content" class="block text-sm font-medium text-gray-700"
+      <div class="form-group">
+        <label for="content" class="form-label"
           >Conteúdo (Markdown)</label
         >
         <SimpleMde v-model="form.content" :configs="editorConfig" />
       </div>
-      <div class="mb-4">
-        <label for="docx" class="block text-sm font-medium text-gray-700"
+      <div class="form-group">
+        <label for="docx" class="form-label"
           >Upload de .docx (opcional)</label
         >
         <input
@@ -34,8 +34,8 @@
           class="mt-1 block w-full"
         />
       </div>
-      <div class="mb-4">
-        <label for="author" class="block text-sm font-medium text-gray-700"
+      <div class="form-group">
+        <label for="author" class="form-label"
           >Autor</label
         >
         <input
@@ -46,13 +46,16 @@
           required
         />
       </div>
-      <button
-        type="submit"
-        class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500"
-        :disabled="submitting"
-      >
-        {{ submitting ? 'Salvando...' : 'Atualizar Post' }}
-      </button>
+      <div class="text-center">
+        <button
+          type="submit"
+          class="create-button"
+          :disabled="submitting"
+        >
+          {{ submitting ? 'Salvando...' : 'Atualizar Post' }}
+        </button>
+        <NuxtLink to="/admin/posts" class="m-2"> Cancelar </NuxtLink>
+      </div>
     </form>
   </div>
 </template>

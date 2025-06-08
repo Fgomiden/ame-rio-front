@@ -13,7 +13,7 @@
             </NuxtLink>
           </div>
           <div class="mx-auto p-3 padding-text">
-            <p class="text-justify text-lg">
+            <p class="text-justify text-md">
               A Associação Médico-Espírita do Estado do Rio de Janeiro (AME-RIO)
               estuda a Doutrina Espírita codificada por Allan Kardec e sua
               fenomenologia, tendo em vista suas relações, integração e
@@ -145,20 +145,20 @@
 }
 
 .logo {
-  width: 120px; /* Base size for logo */
-  height: auto; /* Maintain aspect ratio */
-  max-width: 100%; /* Prevent overflow */
+  width: 120px;
+  height: auto;
+  max-width: 100%;
 }
 
 @media (min-width: 640px) {
   .logo {
-    width: 150px; /* Slightly larger for medium screens */
+    width: 150px;
   }
 }
 
 @media (min-width: 1024px) {
   .logo {
-    width: 180px; /* Larger for desktop */
+    width: 180px;
   }
 }
 

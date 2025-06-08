@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Criar Novo Post</h1>
+    <h1 class="title text-center">Criar Novo Artigo</h1>
     <form @submit.prevent="createPost">
       <div class="form-group">
         <label for="title" class="form-label">Título</label>
@@ -36,9 +36,12 @@
           required
         />
       </div>
-      <button type="submit" class="button-primary" :disabled="submitting">
-        {{ submitting ? 'Salvando...' : 'Criar Post' }}
-      </button>
+      <div class="text-center">
+        <button type="submit" class="create-button" :disabled="submitting">
+          {{ submitting ? 'Salvando...' : 'Criar' }}
+        </button>
+        <NuxtLink to="/admin/posts" class="m-2"> Cancelar </NuxtLink>
+      </div>
     </form>
   </div>
 </template>
@@ -114,9 +117,25 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos específicos para a página de criação */
-form {
-  max-width: 600px;
-  margin: 0 auto;
+:deep(.EasyMDEContainer) {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.create-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  transition: background-color 0.2s;
+}
+
+.create-button:hover {
+  background-color: #4338ca;
 }
 </style>
