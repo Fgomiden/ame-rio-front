@@ -1,6 +1,9 @@
 <template>
   <div class="relative bg-white overflow-hidden">
     <main class="flex-column  flex-wrap container">
+      <section id="carousel-banner">
+        <carousel-banner />
+      </section>
       <section id="banner">
         <banner />
       </section>
@@ -37,9 +40,10 @@
 <script>
 import Atividades from '~/components/pagina-inicial/Atividades.vue'
 import Banner from '~/components/pagina-inicial/Banner.vue'
+import CarouselBanner from '~/components/pagina-inicial/CarouselBanner.vue'
 import PrincipleCard from '~/components/pagina-inicial/PrincipleCard.vue'
 export default {
-  components: { PrincipleCard, Banner, Atividades },
+  components: { PrincipleCard, Banner, CarouselBanner, Atividades },
 }
 </script>
 
