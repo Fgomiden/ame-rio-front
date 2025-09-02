@@ -32,11 +32,11 @@ export default {
           alt: 'Banner 1'
         },
         {
-          image: 'https://res.cloudinary.com/ame-rio/image/upload/v1756676197/aniversario%2030%20anos/Aniversario_Ame_2_pkzn66.png',
+          image: 'https://res.cloudinary.com/ame-rio/image/upload/v1756857082/aniversario%2030%20anos/Aniversario_Ame_2_mmz1fo.png',
           alt: 'Banner 2'
         },
          {
-          image: 'https://res.cloudinary.com/ame-rio/image/upload/v1756676197/aniversario%2030%20anos/Aniversario_Ame_3_wgue3f.png',
+          image: 'https://res.cloudinary.com/ame-rio/image/upload/v1756857087/aniversario%2030%20anos/Aniversario_Ame_3_myf6id.png',
           alt: 'Banner 3'
         }          
       ]
