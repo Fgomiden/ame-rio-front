@@ -1,15 +1,15 @@
 <template>
   <div class="relative bg-white overflow-hidden">
-    <main class="flex-column  flex-wrap container">
-      <section id="carousel-banner">
+    <main class="flex-column flex-wrap container">
+      <!-- <section id="carousel-banner">
         <carousel-banner />
-      </section>
+      </section> -->
       <section id="banner">
         <banner />
       </section>
       <section id="principios">
-        <div class="flex-column ">
-          <div class="flex-column  md-flex-row md-justify-around">
+        <div class="flex-column">
+          <div class="flex-column md-flex-row md-justify-around">
             <principle-card
               title="Missão"
               description="Divulgar para os interessados em saúde a visão científica da medicina espiritual trazida pela doutrina espírita."
@@ -64,5 +64,4 @@ section {
 #principios .flex-column > .flex {
   margin-top: 16px;
 }
-
 </style>
