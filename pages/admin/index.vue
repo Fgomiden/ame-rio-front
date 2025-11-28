@@ -3,15 +3,9 @@
     <main>
       <h1>Painel Administrativo</h1>
       <div class="options">
-        <NuxtLink to="/admin/posts/" class="option-link">
-          Artigos
-        </NuxtLink>
-        <NuxtLink to="/admin/doctors/" class="option-link">
-          Médicos
-        </NuxtLink>
-        <NuxtLink to="/admin/books/" class="option-link">
-          Livros
-        </NuxtLink>
+        <NuxtLink to="/admin/posts/" class="option-link"> Artigos </NuxtLink>
+        <NuxtLink to="/admin/doctors/" class="option-link"> Médicos </NuxtLink>
+        <NuxtLink to="/admin/books/" class="option-link"> Livros </NuxtLink>
         <button @click="logout" class="logout-button">Sair</button>
       </div>
     </main>
@@ -20,6 +14,7 @@
 
 <script>
 export default {
+  layout: 'admin',
   methods: {
     logout() {
       localStorage.removeItem('token')

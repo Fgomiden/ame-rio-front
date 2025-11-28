@@ -5,7 +5,7 @@
       <div class="form-group">
         <label for="title" class="form-label">Título</label>
         <input
-          v-model="form.title"
+          v-model="form.titulo"
           id="title"
           type="text"
           class="form-input"
@@ -14,7 +14,7 @@
       </div>
       <div class="form-group">
         <label for="content" class="form-label">Conteúdo (Markdown)</label>
-        <SimpleMde v-model="form.content" :configs="editorConfig" />
+        <SimpleMde v-model="form.texto" :configs="editorConfig" />
       </div>
       <div class="form-group">
         <label for="docx" class="form-label">Upload de .docx (opcional)</label>
@@ -29,7 +29,7 @@
       <div class="form-group">
         <label for="author" class="form-label">Autor</label>
         <input
-          v-model="form.author"
+          v-model="form.autor"
           id="author"
           type="text"
           class="form-input"
@@ -53,9 +53,9 @@ export default {
   data() {
     return {
       form: {
-        title: '',
-        content: '',
-        author: '',
+        titulo: '',
+        texto: '',
+        autor: '',
       },
       submitting: false,
       editorConfig: {
@@ -80,11 +80,17 @@ export default {
       },
     }
   },
+  layout: 'admin',
   methods: {
     async createPost() {
       this.submitting = true
       try {
-        await this.$axios.$post('/posts', this.form)
+        const token = localStorage.getItem('token')
+        await this.$axios.$post('/artigos', this.form, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         alert('Post criado com sucesso!')
         this.$router.push('/admin/posts')
       } catch (error) {
@@ -103,7 +109,7 @@ export default {
       try {
         const arrayBuffer = await file.arrayBuffer()
         const result = await mammoth.convertToMarkdown({ arrayBuffer })
-        this.form.content = result.value || 'Conteúdo não pôde ser extraído.'
+        this.form.texto = result.value || 'Conteúdo não pôde ser extraído.'
         if (result.messages.length > 0) {
           console.warn('Avisos ao converter .docx:', result.messages)
         }

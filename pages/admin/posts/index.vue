@@ -27,24 +27,50 @@
       <div v-else class="grid">
         <div v-for="post in filteredPosts" :key="post.id" class="card">
           <NuxtLink :to="`/admin/posts/edit/${post.id}`">
-            <h2 class="card-title">{{ post.title }}</h2>
-            <p class="card-info">Autor: {{ post.author }}</p>
-            <p class="card-info">
+            <h2 class="card-title">{{ post.titulo }}</h2>
+            <p class="card-info">Autor: {{ post.autor }}</p>
+            <!-- <p class="card-info">
               Criado em:
               {{
-                post.createdAt
-                  ? $dateFns.format(new Date(post.createdAt), 'dd/mm/yyyy', {
-                      locale: $dateFns.locale,
-                    })
+                post.dataPublicacao
+                  ? $dateFns.format(
+                      new Date(post.dataPublicacao),
+                      'dd/mm/yyyy',
+                      {
+                        locale: $dateFns.locale,
+                      }
+                    )
                   : 'Não informado'
               }}
-            </p>
-            <div class="card-actions">
-              <button @click="deletePost(post.id)" class="delete-button">
-                Excluir
-              </button>
-            </div>
+            </p> -->
           </NuxtLink>
+          <div class="card-actions">
+            <!-- Switch de Publicar/Despublicar -->
+            <div class="publish-switch-container">
+              <label
+                class="switch"
+                :title="
+                  post.publicado ? 'Despublicar artigo' : 'Publicar artigo'
+                "
+              >
+                <input
+                  type="checkbox"
+                  :checked="post.publicado"
+                  @change="togglePublish(post)"
+                />
+                <span class="slider"></span>
+              </label>
+              <span
+                class="publish-label"
+                :class="{ published: post.publicado }"
+              >
+                {{ post.publicado ? 'Publicado' : 'Rascunho' }}
+              </span>
+            </div>
+            <button @click="deletePost(post.id)" class="delete-button">
+              Excluir
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -65,31 +91,94 @@ export default {
       const query = this.searchQuery.toLowerCase()
       return this.posts.filter(
         (post) =>
-          post.title.toLowerCase().includes(query) ||
-          post.author.toLowerCase().includes(query)
+          post.titulo.toLowerCase().includes(query) ||
+          post.autor.toLowerCase().includes(query)
       )
     },
   },
   async fetch() {
     try {
-      this.posts = await this.$axios.$get('/posts')
+      const token = localStorage.getItem('token')
+      this.posts = await this.$axios.$get('/artigos', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
     } catch (error) {
       console.error('Erro ao buscar posts:', error)
       this.posts = []
     }
   },
   middleware: 'auth',
+  layout: 'admin',
   methods: {
-    async deletePost(id) {
-      if (confirm('Tem certeza que deseja excluir este post?')) {
-        try {
-          await this.$axios.$delete(`/posts/${id}`)
-          this.posts = this.posts.filter((post) => post.id !== id)
-          alert('Post excluído com sucesso!')
-        } catch (error) {
-          console.error('Erro ao excluir post:', error)
-          alert('Erro ao excluir o post.')
+    async togglePublish(post) {
+      try {
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+          this.$router.push('/login')
+          return
         }
+
+        // Endpoint depende do estado atual
+        const endpoint = post.publicado
+          ? `/artigos/${post.id}/despublicar`
+          : `/artigos/${post.id}/publicar`
+
+        const response = await this.$axios.patch(
+          endpoint,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        // Atualizar o estado local
+        post.publicado = response.data.publicado
+
+        // Feedback visual
+        this.$toast.success(
+          post.publicado
+            ? '✅ Artigo publicado com sucesso!'
+            : '📝 Artigo despublicado'
+        )
+      } catch (error) {
+        console.error('Erro ao alterar status:', error)
+
+        // Feedback de erro
+        if (error.response?.status === 401) {
+          this.$toast.error('Sessão expirada. Faça login novamente.')
+          this.$router.push('/login')
+        } else {
+          this.$toast.error('Erro ao alterar status do artigo')
+        }
+      }
+    },
+
+    async deletePost(id) {
+      if (!confirm('Tem certeza que deseja excluir este artigo?')) {
+        return
+      }
+
+      try {
+        const token = localStorage.getItem('token')
+
+        await this.$axios.delete(`/artigos/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        // Remover da lista
+        this.posts = this.posts.filter((p) => p.id !== id)
+
+        this.$toast.success('🗑️ Artigo excluído com sucesso!')
+      } catch (error) {
+        console.error('Erro ao excluir:', error)
+        this.$toast.error('Erro ao excluir artigo')
       }
     },
   },

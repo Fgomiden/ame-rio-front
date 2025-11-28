@@ -17,15 +17,11 @@
         />
       </div>
       <div class="form-group">
-        <label for="content" class="form-label"
-          >Conteúdo (Markdown)</label
-        >
+        <label for="content" class="form-label">Conteúdo (Markdown)</label>
         <SimpleMde v-model="form.content" :configs="editorConfig" />
       </div>
       <div class="form-group">
-        <label for="docx" class="form-label"
-          >Upload de .docx (opcional)</label
-        >
+        <label for="docx" class="form-label">Upload de .docx (opcional)</label>
         <input
           type="file"
           id="docx"
@@ -35,9 +31,7 @@
         />
       </div>
       <div class="form-group">
-        <label for="author" class="form-label"
-          >Autor</label
-        >
+        <label for="author" class="form-label">Autor</label>
         <input
           v-model="form.author"
           id="author"
@@ -47,11 +41,7 @@
         />
       </div>
       <div class="text-center">
-        <button
-          type="submit"
-          class="create-button"
-          :disabled="submitting"
-        >
+        <button type="submit" class="create-button" :disabled="submitting">
           {{ submitting ? 'Salvando...' : 'Atualizar Post' }}
         </button>
         <NuxtLink to="/admin/posts" class="m-2"> Cancelar </NuxtLink>
@@ -97,7 +87,7 @@ export default {
   },
   async fetch() {
     try {
-      this.post = await this.$axios.$get(`/posts/${this.$route.params.id}`)
+      this.post = await this.$axios.$get(`/artigos/${this.$route.params.id}`)
       this.form = {
         title: this.post.title,
         content: this.post.content,
@@ -108,11 +98,12 @@ export default {
       this.post = null
     }
   },
+  layout: 'admin',
   methods: {
     async updatePost() {
       this.submitting = true
       try {
-        await this.$axios.$put(`/posts/${this.$route.params.id}`, this.form)
+        await this.$axios.$put(`/artigos/${this.$route.params.id}`, this.form)
         alert('Post atualizado com sucesso!')
         this.$router.push('/admin/posts')
       } catch (error) {

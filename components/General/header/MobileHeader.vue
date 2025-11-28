@@ -1,5 +1,5 @@
 <template>
-  <nav class="mobile-header">    
+  <nav class="mobile-header">
     <div class="nav-links">
       <NuxtLink
         v-for="navLink in navLinks"
@@ -50,7 +50,7 @@ export default {
         },
         {
           title: 'Artigos',
-          route: '/posts',
+          route: '/artigos',
         },
         {
           title: 'Recado',
@@ -105,7 +105,9 @@ export default {
   justify-content: center;
   border-radius: 0.375rem;
   text-decoration: none;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
   transition-timing-function: ease-in-out;
   transition-duration: 150ms;
 }

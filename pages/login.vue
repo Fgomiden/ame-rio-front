@@ -37,6 +37,7 @@ export default {
       error: '',
     }
   },
+  layout: 'admin',
   methods: {
     async handleLogin() {
       try {
@@ -49,9 +50,9 @@ export default {
       } catch (error) {
         if (error.response?.status === 500) {
           this.error = 'Erro na configuração do Servidor'
-        }
-        else if (error.response?.status === 429) {
-          this.error = 'Muitas tentativas, por favor, tente novamente mais tarde'
+        } else if (error.response?.status === 429) {
+          this.error =
+            'Muitas tentativas, por favor, tente novamente mais tarde'
         } else {
           this.error = 'Nome de usuário ou senha inválidos'
         }
