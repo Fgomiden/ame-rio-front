@@ -35,7 +35,6 @@
       <div class="blog-posts-grid">
         <div v-for="post in filteredPosts" :key="post.id" class="post-card">
           <NuxtLink :to="'/posts/' + post.slug">
-            <Date :date="post.createdAt" />
             <h3 class="post-title-semibold">
               {{ post.titulo }}
             </h3>

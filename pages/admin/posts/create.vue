@@ -13,19 +13,40 @@
         />
       </div>
       <div class="form-group">
-        <label for="content" class="form-label">Conteúdo (Markdown)</label>
-        <SimpleMde v-model="form.texto" :configs="editorConfig" />
+        <label for="content" class="form-label">Conteúdo</label>
+        <client-only>
+          <ToastEditor
+            ref="toastEditor"
+            :initial-value="form.texto"
+            initial-edit-type="wysiwyg"
+            :options="editorOptions"
+            height="600px"
+            @change="onEditorChange"
+          />
+        </client-only>
       </div>
+
       <div class="form-group">
-        <label for="docx" class="form-label">Upload de .docx (opcional)</label>
-        <input
-          type="file"
-          id="docx"
-          accept=".docx"
-          @change="handleFileUpload"
-          class="form-input"
-        />
+        <label for="docx" class="form-label">
+          📄 Upload de .docx (opcional)
+        </label>
+        <div class="file-upload-wrapper">
+          <input
+            type="file"
+            id="docx"
+            ref="fileInput"
+            accept=".docx"
+            @change="handleFileUpload"
+            class="file-input"
+          />
+          <label for="docx" class="file-label">
+            <span v-if="!uploadedFile">Escolher arquivo .docx</span>
+            <span v-else>✅ {{ uploadedFile }}</span>
+          </label>
+        </div>
+        <p class="help-text">O conteúdo do arquivo substituirá o texto atual</p>
       </div>
+
       <div class="form-group">
         <label for="author" class="form-label">Autor</label>
         <input
@@ -58,44 +79,67 @@ export default {
         autor: '',
       },
       submitting: false,
-      editorConfig: {
-        spellChecker: false,
-        status: false,
-        toolbar: [
-          'bold',
-          'italic',
-          'heading',
-          '|',
-          'quote',
-          'unordered-list',
-          'ordered-list',
-          '|',
-          'link',
-          'image',
-          '|',
-          'preview',
-          'side-by-side',
-          'fullscreen',
+      editorOptions: {
+        minHeight: '600px',
+        language: 'pt-BR',
+        useCommandShortcut: true,
+        usageStatistics: false,
+        hideModeSwitch: false,
+        toolbarItems: [
+          ['heading', 'bold', 'italic', 'strike'],
+          ['hr', 'quote'],
+          ['ul', 'ol', 'task'],
+          ['image', 'table', 'link'],
+          ['code', 'codeblock'],
         ],
       },
     }
   },
   layout: 'admin',
   methods: {
+    onEditorChange() {
+      this.form.texto = this.$refs.toastEditor.invoke('getMarkdown')
+    },
+
     async createPost() {
       this.submitting = true
       try {
         const token = localStorage.getItem('token')
-        await this.$axios.$post('/artigos', this.form, {
+
+        this.form.texto = this.$refs.toastEditor.invoke('getMarkdown')
+
+        // Validações
+        if (!this.form.titulo.trim()) {
+          this.$toast.warning('⚠️ Título é obrigatório')
+          return
+        }
+
+        if (!this.form.autor.trim()) {
+          this.$toast.warning('⚠️ Autor é obrigatório')
+          return
+        }
+
+        if (!this.form.texto.trim()) {
+          this.$toast.warning('⚠️ Conteúdo é obrigatório')
+          return
+        }
+
+        const novoArtigo = await this.$axios.$post('/artigos', this.form, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        alert('Post criado com sucesso!')
-        this.$router.push('/admin/posts')
+
+        this.$eventBus.$emit('artigo-criado', novoArtigo)
+
+        this.$toast.success('✅ Artigo criado com sucesso!')
+
+        setTimeout(() => {
+          this.$router.push('/admin/posts')
+        }, 300)
       } catch (error) {
         console.error('Erro ao criar post:', error)
-        alert('Erro ao criar o post.')
+        this.$toast.error('❌ Erro ao criar o artigo.')
       } finally {
         this.submitting = false
       }
@@ -103,19 +147,22 @@ export default {
     async handleFileUpload(event) {
       const file = event.target.files[0]
       if (!file || !file.name.endsWith('.docx')) {
-        alert('Por favor, selecione um arquivo .docx')
+        this.$toast.warning('⚠️ Por favor, selecione um arquivo .docx')
         return
       }
+
       try {
         const arrayBuffer = await file.arrayBuffer()
         const result = await mammoth.convertToMarkdown({ arrayBuffer })
-        this.form.texto = result.value || 'Conteúdo não pôde ser extraído.'
-        if (result.messages.length > 0) {
-          console.warn('Avisos ao converter .docx:', result.messages)
-        }
+
+        // Definir conteúdo no editor
+        this.$refs.toastEditor.invoke('setMarkdown', result.value)
+        this.form.texto = result.value
+
+        this.$toast.success('📄 Arquivo .docx processado com sucesso!')
       } catch (error) {
         console.error('Erro ao processar arquivo .docx:', error)
-        alert('Erro ao processar o arquivo .docx.')
+        this.$toast.error('❌ Erro ao processar o arquivo .docx.')
       }
     },
   },
@@ -123,11 +170,6 @@ export default {
 </script>
 
 <style scoped>
-:deep(.EasyMDEContainer) {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 .create-button {
   display: inline-block;
   padding: 0.75rem 1.5rem;

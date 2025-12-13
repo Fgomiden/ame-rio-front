@@ -1,0 +1,203 @@
+/* ===== TOAST UI EDITOR - CUSTOMIZAÇÃO ===== */
+
+/* Blockquote - Citações */
+.toastui-editor-contents blockquote,
+.toastui-editor-md-preview blockquote {
+  background-color: #f3f4f6 !important;
+  border-left: 4px solid #004a92 !important;
+  color: #1f2937 !important;
+  padding: 1rem 1.25rem !important;
+  margin: 1rem 0 !important;
+  font-style: italic;
+}
+
+.toastui-editor-contents blockquote p,
+.toastui-editor-md-preview blockquote p {
+  color: #374151 !important;
+  margin: 0 !important;
+}
+
+/* Listas Ordenadas - Números */
+.toastui-editor-contents ol,
+.toastui-editor-md-preview ol {
+  color: #1f2937 !important;
+  padding-left: 2rem !important;
+}
+
+.toastui-editor-contents ol li,
+.toastui-editor-md-preview ol li {
+  color: #374151 !important;
+  margin: 0.5rem 0 !important;
+  line-height: 1.7 !important;
+}
+
+.toastui-editor-contents ol li::marker,
+.toastui-editor-md-preview ol li::marker {
+  color: #004a92 !important;
+  font-weight: 600 !important;
+}
+
+/* Listas Não Ordenadas - Bullets */
+.toastui-editor-contents ul,
+.toastui-editor-md-preview ul {
+  color: #1f2937 !important;
+  padding-left: 2rem !important;
+}
+
+.toastui-editor-contents ul li,
+.toastui-editor-md-preview ul li {
+  color: #374151 !important;
+  margin: 0.5rem 0 !important;
+  line-height: 1.7 !important;
+}
+
+.toastui-editor-contents ul li::marker,
+.toastui-editor-md-preview ul li::marker {
+  color: #004a92 !important;
+}
+
+/* Task Lists - Checkboxes */
+.toastui-editor-contents .task-list-item,
+.toastui-editor-md-preview .task-list-item {
+  color: #374151 !important;
+}
+
+/* Parágrafos dentro de listas */
+.toastui-editor-contents ol li p,
+.toastui-editor-contents ul li p,
+.toastui-editor-md-preview ol li p,
+.toastui-editor-md-preview ul li p {
+  color: #374151 !important;
+}
+
+/* Código inline */
+.toastui-editor-contents code,
+.toastui-editor-md-preview code {
+  background-color: #f3f4f6 !important;
+  color: #dc2626 !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 0.25rem !important;
+  font-size: 0.9em !important;
+}
+
+/* Blocos de código */
+.toastui-editor-contents pre,
+.toastui-editor-md-preview pre {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  overflow-x: auto !important;
+}
+
+.toastui-editor-contents pre code,
+.toastui-editor-md-preview pre code {
+  background-color: transparent !important;
+  color: #f9fafb !important;
+  padding: 0 !important;
+}
+
+/* Tabelas */
+.toastui-editor-contents table,
+.toastui-editor-md-preview table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+  margin: 1rem 0 !important;
+}
+
+.toastui-editor-contents table th,
+.toastui-editor-md-preview table th {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  padding: 0.75rem !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.toastui-editor-contents table td,
+.toastui-editor-md-preview table td {
+  color: #374151 !important;
+  padding: 0.75rem !important;
+  border: 1px solid #d1d5db !important;
+}
+
+/* Headings */
+.toastui-editor-contents h1,
+.toastui-editor-md-preview h1 {
+  color: #1f2937 !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.toastui-editor-contents h2,
+.toastui-editor-md-preview h2 {
+  color: #1f2937 !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.toastui-editor-contents h3,
+.toastui-editor-md-preview h3 {
+  color: #374151 !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Links */
+.toastui-editor-contents a,
+.toastui-editor-md-preview a {
+  color: #004a92 !important;
+  text-decoration: underline !important;
+}
+
+.toastui-editor-contents a:hover,
+.toastui-editor-md-preview a:hover {
+  color: #4338ca !important;
+}
+
+/* Horizontal Rule */
+.toastui-editor-contents hr,
+.toastui-editor-md-preview hr {
+  border: none !important;
+  border-top: 2px solid #e5e7eb !important;
+  margin: 2rem 0 !important;
+}
+
+/* Imagens */
+.toastui-editor-contents img,
+.toastui-editor-md-preview img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 0.5rem !important;
+  margin: 1rem 0 !important;
+}
+
+/* Texto padrão */
+.toastui-editor-contents p,
+.toastui-editor-md-preview p {
+  color: #374151 !important;
+  line-height: 1.7 !important;
+  margin: 0.75rem 0 !important;
+}
+
+/* Editor WYSIWYG - Modo de Edição */
+.toastui-editor-ww-container {
+  color: #374151 !important;
+}
+
+.toastui-editor-ww-container ol,
+.toastui-editor-ww-container ul {
+  color: #374151 !important;
+}
+
+.toastui-editor-ww-container blockquote {
+  background-color: #f3f4f6 !important;
+  border-left: 4px solid #004a92 !important;
+  color: #374151 !important;
+}

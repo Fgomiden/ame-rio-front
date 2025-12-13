@@ -1,140 +1,492 @@
 <template>
   <div>
-    <div v-if="$fetchState.pending">
-      <p>Carregando...</p>
-      <!-- Adicione um loading simples -->
+    <div v-if="$fetchState.pending" class="loading-state">
+      <div class="spinner"></div>
+      <p>Carregando artigo...</p>
     </div>
+
     <div v-else-if="post" class="post-wrapper">
       <div class="post-container">
-        <div class="post-intro">
-          <h1 class="post-heading">
+        <!-- Cabeçalho do Post -->
+        <div class="post-header">
+          <h1 class="post-title">
             {{ post.titulo }}
           </h1>
+
+          <div class="post-meta">
+            <span class="author">👤 {{ post.autor }}</span>
+            <Date v-if="post.dataPublicacao" :date="post.dataPublicacao" />
+          </div>
         </div>
-        <div
+
+        <!-- Conteúdo do Post -->
+        <article
           v-if="post.texto"
-          class="post-content"
+          class="post-content markdown-body"
           v-html="$md.render(post.texto)"
-        ></div>
-        <div class="post-content-simple">
-          <Date v-if="post.dataPublicacao" :date="post.dataPublicacao" />
+        ></article>
+
+        <div v-else class="empty-content">
+          <p>Este artigo ainda não possui conteúdo.</p>
         </div>
       </div>
     </div>
-    <div v-else>
-      <p>Post não encontrado.</p>
-      <!-- Tratamento de erro -->
+
+    <div v-else class="error-state">
+      <h2>❌ Artigo não encontrado</h2>
+      <p>O artigo que você procura não existe ou foi removido.</p>
+      <NuxtLink to="/" class="back-home">← Voltar para o início</NuxtLink>
     </div>
   </div>
 </template>
 
 <script>
+import Date from '~/components/Date.vue'
 export default {
   scrollToTop: true,
+
   data() {
     return {
       post: null,
     }
   },
+
   async fetch() {
     try {
       this.post = await this.$axios.$get(
         `/artigos/slug/${this.$route.params.slug}`
       )
-      console.log('post', this.post)
+      console.log('Post carregado:', this.post)
     } catch (error) {
       console.error('Erro ao buscar o post:', error)
-      this.post = null // Define como null se der erro
+      this.post = null
     }
   },
+
   fetchOnServer: true,
+
+  head() {
+    // SEO
+    return {
+      title: this.post?.titulo || 'Artigo',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.post?.texto?.substring(0, 160) || '',
+        },
+      ],
+    }
+  },
 }
 </script>
+
 <style scoped>
-/* relative py-16 bg-white dark:bg-indigo-400 overflow-hidden */
-.post-wrapper {
-  position: relative;
-  padding-top: 4rem; /* 64px */
-  padding-bottom: 4rem; /* 64px */
-  background-color: #ffffff;
-  overflow: hidden;
+/* ===== LOADING STATE ===== */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
 }
 
-/* relative px-4 sm:px-6 lg:px-8 */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== ERROR STATE ===== */
+.error-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-state h2 {
+  font-size: 2rem;
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.error-state p {
+  color: #6b7280;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+.back-home {
+  padding: 0.75rem 1.5rem;
+  background-color: #6366f1;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.back-home:hover {
+  background-color: #4338ca;
+}
+
+/* ===== POST WRAPPER ===== */
+.post-wrapper {
+  position: relative;
+  padding: 4rem 0;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
 .post-container {
   position: relative;
-  padding-left: 1rem; /* 16px */
-  padding-right: 1rem; /* 16px */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 @media (min-width: 640px) {
   .post-container {
-    padding-left: 1.5rem; /* 24px */
-    padding-right: 1.5rem; /* 24px */
+    padding: 0 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .post-container {
-    padding-left: 2rem; /* 32px */
-    padding-right: 2rem; /* 32px */
+    padding: 0 2rem;
   }
 }
 
-/* text-lg max-w-prose mx-auto mb-6 */
-.post-intro {
-  font-size: 1.125rem; /* 18px */
-  max-width: 50ch;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1.5rem; /* 24px */
+/* ===== POST HEADER ===== */
+.post-header {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-align: center;
 }
 
-/* mt-2 mb-4 text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 */
-.post-heading {
-  margin-top: 0.5rem; /* 8px */
-  margin-bottom: 1rem; /* 16px */
-  font-size: 1.875rem; /* 30px */
-  text-align: center;
-  line-height: 2rem; /* 32px */
+.post-title {
+  font-size: 2.5rem;
   font-weight: 800;
-  letter-spacing: -0.025em;
+  line-height: 1.2;
   color: #111827;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
 }
 
 @media (min-width: 640px) {
-  .post-heading {
-    font-size: 2.25rem; /* 36px */
-    line-height: 2.5rem; /* 40px */
+  .post-title {
+    font-size: 3rem;
   }
 }
 
-/* prose prose-lg text-justify mx-auto px-5 px-md-50 max-w-4xl */
-.post-content {
-  max-width: 80rem; /* 896px - max-w-4xl */
-  margin-left: auto;
-  margin-right: auto;
+.post-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.author {
+  font-weight: 600;
+  color: #374151;
+}
+
+.views {
+  color: #6b7280;
+}
+
+.empty-content {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6b7280;
+}
+</style>
+
+<style>
+/* ===== ESTILOS MARKDOWN - NÃO USE SCOPED ===== */
+
+.markdown-body {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #374151;
+}
+
+/* Parágrafos */
+.markdown-body p {
+  margin: 1.25rem 0;
+  line-height: 1.8;
   text-align: justify;
-  font-size: 1.125rem; /* 18px - prose-lg */
-  line-height: 1.75rem; /* 28px - prose-lg */
+}
+
+/* Headings */
+.markdown-body h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #111827;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.markdown-body h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.markdown-body h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.markdown-body h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Listas Ordenadas */
+.markdown-body ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
   color: #374151;
 }
 
-@media (min-width: 768px) {
-  .post-content {
-    padding-left: 12.5rem; /* 200px - px-md-50 (assumindo 50 * 4px) */
-    padding-right: 12.5rem; /* 200px */
+.markdown-body ol li {
+  margin: 0.75rem 0;
+  line-height: 1.8;
+  padding-left: 0.5rem;
+}
+
+.markdown-body ol li::marker {
+  color: #6366f1;
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+/* Listas Não Ordenadas */
+.markdown-body ul {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+  color: #374151;
+}
+
+.markdown-body ul li {
+  margin: 0.75rem 0;
+  line-height: 1.8;
+  padding-left: 0.5rem;
+}
+
+.markdown-body ul li::marker {
+  color: #6366f1;
+  font-size: 1.2em;
+}
+
+/* Sublistas */
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin: 0.5rem 0;
+}
+
+/* Blockquote - Citações */
+.markdown-body blockquote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  background-color: #f3f4f6;
+  border-left: 4px solid #6366f1;
+  border-radius: 0.5rem;
+  font-style: italic;
+  color: #374151;
+}
+
+.markdown-body blockquote p {
+  margin: 0.5rem 0;
+  text-align: left;
+}
+
+.markdown-body blockquote p:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Código Inline */
+.markdown-body code {
+  background-color: #f3f4f6;
+  color: #dc2626;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Blocos de Código */
+.markdown-body pre {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background-color: #1f2937;
+  color: #f9fafb;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  color: #f9fafb;
+  padding: 0;
+  font-size: 0.95rem;
+}
+
+/* Links */
+.markdown-body a {
+  color: #6366f1;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.markdown-body a:hover {
+  color: #4338ca;
+}
+
+/* Imagens */
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  display: block;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabelas */
+.markdown-body table {
+  width: 100%;
+  margin: 2rem 0;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.markdown-body table th {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  font-weight: 700;
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 2px solid #d1d5db;
+}
+
+.markdown-body table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+}
+
+.markdown-body table tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-body table tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Linha Horizontal */
+.markdown-body hr {
+  margin: 3rem 0;
+  border: none;
+  border-top: 2px solid #e5e7eb;
+}
+
+/* Strong (Negrito) */
+.markdown-body strong {
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Emphasis (Itálico) */
+.markdown-body em {
+  font-style: italic;
+  color: #4b5563;
+}
+
+/* Strike */
+.markdown-body del {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+/* Task Lists */
+.markdown-body .task-list-item {
+  list-style: none;
+  margin-left: -2rem;
+  padding-left: 0;
+}
+
+.markdown-body .task-list-item input {
+  margin-right: 0.5rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .markdown-body {
+    font-size: 1rem;
   }
-}
 
-/* prose prose-lg mx-auto mt-4 */
-.post-content-simple {
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.75rem; /* 28px */
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 1rem; /* 16px */
-  color: #374151;
-  max-width: 65ch; /* largura padrão do prose */
+  .markdown-body h1 {
+    font-size: 1.875rem;
+  }
+
+  .markdown-body h2 {
+    font-size: 1.5rem;
+  }
+
+  .markdown-body h3 {
+    font-size: 1.25rem;
+  }
+
+  .markdown-body pre {
+    font-size: 0.875rem;
+  }
+
+  .markdown-body table {
+    font-size: 0.875rem;
+  }
 }
 </style>

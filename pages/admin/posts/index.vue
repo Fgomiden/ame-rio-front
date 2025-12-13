@@ -29,20 +29,20 @@
           <NuxtLink :to="`/admin/posts/edit/${post.id}`">
             <h2 class="card-title">{{ post.titulo }}</h2>
             <p class="card-info">Autor: {{ post.autor }}</p>
-            <!-- <p class="card-info">
+            <p class="card-info">
               Criado em:
               {{
                 post.dataPublicacao
                   ? $dateFns.format(
                       new Date(post.dataPublicacao),
-                      'dd/mm/yyyy',
+                      'dd/MM/yyyy',
                       {
                         locale: $dateFns.locale,
                       }
                     )
                   : 'Não informado'
               }}
-            </p> -->
+            </p>
           </NuxtLink>
           <div class="card-actions">
             <!-- Switch de Publicar/Despublicar -->
@@ -96,6 +96,14 @@ export default {
       )
     },
   },
+  mounted() {
+    // ✅ Escutar evento
+    this.$eventBus.$on('artigo-criado', this.adicionarNovoArtigo)
+  },
+  beforeDestroy() {
+    // ✅ Remover listener
+    this.$eventBus.$off('artigo-criado', this.adicionarNovoArtigo)
+  },
   async fetch() {
     try {
       const token = localStorage.getItem('token')
@@ -112,6 +120,12 @@ export default {
   middleware: 'auth',
   layout: 'admin',
   methods: {
+    adicionarNovoArtigo(novoArtigo) {
+      this.posts.unshift(novoArtigo)
+      this.$toast.success('📝 Novo artigo adicionado!')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
+
     async togglePublish(post) {
       try {
         const token = localStorage.getItem('token')
