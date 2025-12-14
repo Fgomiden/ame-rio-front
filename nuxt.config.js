@@ -85,8 +85,15 @@ export default {
     '@nuxtjs/markdownit',
   ],
 
+  publicRuntimeConfig: {
+    baseURL: process.env.NUXT_ENV_BASE_URL || 'http://localhost:8080/api',
+    axios: {
+      baseURL: process.env.NUXT_ENV_BASE_URL || 'http://localhost:8080/api',
+    },
+  },
+
   axios: {
-    baseURL: process.env.BASE_URL || 'http://localhost:8080/api',
+    baseURL: process.env.NUXT_ENV_BASE_URL || 'http://localhost:8080/api',
   },
 
   markdownit: {
