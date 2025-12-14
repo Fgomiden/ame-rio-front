@@ -123,19 +123,18 @@ export default {
       },
       submitting: false,
       uploadedFile: null,
-      editMode: 'wysiwyg', // Modo inicial: 'wysiwyg' ou 'markdown'
+      editMode: 'wysiwyg',
       editorOptions: {
         minHeight: '600px',
         language: 'pt-BR',
         useCommandShortcut: true,
         usageStatistics: false,
-        hideModeSwitch: false, // Mostra botão para alternar WYSIWYG/Markdown
+        hideModeSwitch: false,
         toolbarItems: [
           ['heading', 'bold', 'italic', 'strike'],
           ['hr', 'quote'],
-          ['ul', 'ol', 'task', 'indent', 'outdent'],
-          ['table', 'image', 'link'],
-          ['code', 'codeblock'],
+          ['ul', 'ol', 'image', 'table', 'indent', 'outdent'],
+          ['task', 'link'],
         ],
         placeholder: 'Digite o conteúdo do artigo aqui...',
       },

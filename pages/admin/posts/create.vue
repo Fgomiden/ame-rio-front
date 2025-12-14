@@ -88,9 +88,8 @@ export default {
         toolbarItems: [
           ['heading', 'bold', 'italic', 'strike'],
           ['hr', 'quote'],
-          ['ul', 'ol', 'task'],
-          ['image', 'table', 'link'],
-          ['code', 'codeblock'],
+          ['ul', 'ol', 'image', 'table'],
+          ['indent', 'outdent', 'task', 'link'],
         ],
       },
     }
